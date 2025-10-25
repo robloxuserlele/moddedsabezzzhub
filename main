@@ -28,6 +28,16 @@ title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 
+local tip = Instance.new("TextLabel")
+tip.Parent = frame
+tip.Size = UDim2.new(1, 0, 0, 25)
+tip.Position = UDim2.new(0, 0, 1, -25)
+tip.BackgroundTransparency = 1
+tip.Text = "Press ALT for hide/unhide"
+tip.TextColor3 = Color3.fromRGB(180, 180, 180)
+tip.Font = Enum.Font.Gotham
+tip.TextScaled = true
+
 local function createButton(text, posY)
   local button = Instance.new("TextButton")
   button.Parent = frame
