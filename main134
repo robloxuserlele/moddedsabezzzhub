@@ -46,6 +46,10 @@ local function createButton(text, posY)
   return button
 end
 
-
 local btn1 = createButton("Main", 90)
 local btn2 = createButton("Tools", 140)
+
+btn1.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet(""))()
+    screenGui:Destroy()
+end)
