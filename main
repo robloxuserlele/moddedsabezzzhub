@@ -33,7 +33,7 @@ tip.Parent = frame
 tip.Size = UDim2.new(1, 0, 0, 25)
 tip.Position = UDim2.new(0, 0, 1, -25)
 tip.BackgroundTransparency = 1
-tip.Text = "Press ALT for hide/unhide"
+tip.Text = "Press ALT for hide/unhide, Q for Insta Tp"
 tip.TextColor3 = Color3.fromRGB(180, 180, 180)
 tip.Font = Enum.Font.Gotham
 tip.TextScaled = true
@@ -108,6 +108,20 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
   if not gameProcessed then
     if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
       frame.Visible = not frame.Visible
+    elseif input.KeyCode == Enum.KeyCode.Q then
+         local plr = game.Players.LocalPlayer
+local char = plr.Character
+local hrp = char.HumanoidRootPart
+  local c = game:GetService("ReplicatedStorage"):FindFirstChild("Controllers")
+    local pc = require(c.PlotController)
+    local p = pc:GetMyPlot()
+    if p then
+        local tppart = p.PlotModel:WaitForChild("DeliveryHitbox")
+        hrp.CFrame = tppart.CFrame
+    elseif not p then
+        print("whyyy")
+    end
+end)
     end
   end
 end)
