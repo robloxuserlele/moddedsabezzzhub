@@ -53,3 +53,9 @@ btn1.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxuserlele/moddedsabezzzhub/refs/heads/main/features"))()
     screenGui:Destroy()
 end)
+
+
+btn2.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet(""))()
+    screenGui:Destroy()
+end)
