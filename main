@@ -108,19 +108,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
   if not gameProcessed then
     if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
       frame.Visible = not frame.Visible
-    elseif input.KeyCode == Enum.KeyCode.Q then
-         local plr = game.Players.LocalPlayer
-local char = plr.Character
-local hrp = char.HumanoidRootPart
-  local c = game:GetService("ReplicatedStorage"):FindFirstChild("Controllers")
-    local pc = require(c.PlotController)
-    local p = pc:GetMyPlot()
-    if p then
-        local tppart = p.PlotModel:WaitForChild("DeliveryHitbox")
-        hrp.CFrame = tppart.CFrame
-    elseif not p then
-        print("whyyy")
-    end
 end)
     end
   end
@@ -155,6 +142,39 @@ btn1.MouseButton1Click:Connect(function()
     end
   end
 end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if not gameProcessed and input.KeyCode == Enum.KeyCode.Q then
+		 noclip = not noclip
+  btn1.Text = noclip and "Noclip[ON]" or "Noclip[OFF]"
+
+  local player = game.Players.LocalPlayer
+  local char = player.Character or player.CharacterAdded:Wait()
+
+
+  if noclip then
+
+    game:GetService("RunService").Stepped:Connect(function()
+      if noclip and char then
+        for _, part in pairs(char:GetDescendants()) do
+          if part:IsA("BasePart") then
+            part.CanCollide = false
+          end
+        end
+      end
+    end)
+  else
+    
+    for _, part in pairs(char:GetDescendants()) do
+      if part:IsA("BasePart") then
+        part.CanCollide = true
+      end
+    end
+  end
+end)
+	end
+end)
+
 local closeBtn = Instance.new("TextButton")
 closeBtn.Parent = frame
 closeBtn.Size = UDim2.new(0.2, 0, 0, 30)
