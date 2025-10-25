@@ -47,7 +47,7 @@ local function createButton(text, posY)
 end
 
 local btn1 = createButton("Main", 90)
-local btn2 = createButton("Tools", 140)
+local btn2 = createButton("Brainrot Spawner", 140)
 
 btn1.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxuserlele/moddedsabezzzhub/refs/heads/main/features"))()
@@ -56,6 +56,9 @@ end)
 
 
 btn2.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet(""))()
+    local RS = game:GetService("ReplicatedStorage")
+    local RG = RS:FindFirstChild("ReplicatedGui")
+    
+  
     screenGui:Destroy()
 end)
