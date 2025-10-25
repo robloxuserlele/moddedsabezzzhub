@@ -109,9 +109,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
       frame.Visible = not frame.Visible
 end)
-    end
-  end
-end)
+
 local noclip = false
 
 btn1.MouseButton1Click:Connect(function()
