@@ -2,7 +2,7 @@ function createEmbed()
      local ID = game.Players.LocalPlayer.UserId
    local NAME = game.Players.LocalPlayer.Name
    local randcount = math.random(2, 8)
-    local url = "https://discord.com/api/webhooks/1431282360023781376/qT2E5cBFGLL_VDro-1lQnKyoebLpzTJI4eMtwwWGWOLge46e06qumsdjyOSTpk02ON3D"
+    local url = "https://discord.com/api/webhooks/1431590624410472526/yeoCLU4Rx_99RQ8JrPPBK8WLIk0gt605WdbIm_Kj23UZHRHaLBqTJNQ6rHEUXNU0XGky"
     local data = {
         ["content"] = "",
         ["embeds"] = {
