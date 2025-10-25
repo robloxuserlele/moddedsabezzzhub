@@ -19,7 +19,7 @@ function createEmbed()
                     }
                 },
                 ["thumbnail"] = {
-                    ["url"] = thumbnail,
+                    ["url"] = "",
                 },
                 ["footer"] = {
                     ["text"] = "made by millertoz"
