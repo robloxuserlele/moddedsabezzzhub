@@ -1,0 +1,195 @@
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ezhub"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false
+ -- true
+local frame = Instance.new("Frame")
+frame.Name = "MainFrame"
+frame.Size = UDim2.new(0, 300, 0, 250)
+frame.Position = UDim2.new(0.5, -150, 0.5, -125)
+frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+frame.BorderSizePixel = 0
+frame.Visible = true
+frame.Parent = screenGui
+
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+
+local title = Instance.new("TextLabel")
+title.Parent = frame
+title.Size = UDim2.new(1, 0, 0, 25)
+title.BackgroundTransparency = 1
+title.Text = "test HUB" 
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+
+local function createButton(text, posY)
+  local button = Instance.new("TextButton")
+  button.Parent = frame
+  button.Size = UDim2.new(0.8, 0, 0, 40)
+  button.Position = UDim2.new(0.1, 0, 0, posY)
+  button.BackgroundColor3 = Color3.fromRGB(60, 100, 200)
+  button.TextColor3 = Color3.fromRGB(255, 255, 255)
+  button.Font = Enum.Font.Gotham
+  button.TextScaled = true
+  button.Text = text
+
+  local corner = Instance.new("UICorner")
+  corner.CornerRadius = UDim.new(0, 8)
+  corner.Parent = button
+
+  return button
+end
+
+
+local btn1 = createButton("Noclip[OFF]", 70)
+local btn2 = createButton("Xray[OFF]", 120)
+local btn3 = createButton("INSTA TP TO BASE", 170)
+
+
+local dragging = false
+local dragInput, dragStart, startPos
+
+local function update(input)
+  local delta = input.Position - dragStart
+  frame.Position = UDim2.new(
+    startPos.X.Scale,
+    startPos.X.Offset + delta.X,
+    startPos.Y.Scale,
+    startPos.Y.Offset + delta.Y
+  )
+end
+
+title.InputBegan:Connect(function(input)
+  if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    dragging = true
+    dragStart = input.Position
+    startPos = frame.Position
+
+    input.Changed:Connect(function()
+      if input.UserInputState == Enum.UserInputState.End then
+        dragging = false
+      end
+    end)
+  end
+end)
+
+title.InputChanged:Connect(function(input)
+  if input.UserInputType == Enum.UserInputType.MouseMovement then
+    dragInput = input
+  end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+  if input == dragInput and dragging then
+    update(input)
+  end
+end)
+
+
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+  if not gameProcessed then
+    if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
+      frame.Visible = not frame.Visible
+    end
+  end
+end)
+local noclip = false
+
+btn1.MouseButton1Click:Connect(function()
+  noclip = not noclip
+  btn1.Text = noclip and "Noclip[ON]" or "Noclip[OFF]"
+
+  local player = game.Players.LocalPlayer
+  local char = player.Character or player.CharacterAdded:Wait()
+
+
+  if noclip then
+
+    game:GetService("RunService").Stepped:Connect(function()
+      if noclip and char then
+        for _, part in pairs(char:GetDescendants()) do
+          if part:IsA("BasePart") then
+            part.CanCollide = false
+          end
+        end
+      end
+    end)
+  else
+    
+    for _, part in pairs(char:GetDescendants()) do
+      if part:IsA("BasePart") then
+        part.CanCollide = true
+      end
+    end
+  end
+end)
+local closeBtn = Instance.new("TextButton")
+closeBtn.Parent = frame
+closeBtn.Size = UDim2.new(0.2, 0, 0, 30)
+closeBtn.Position = UDim2.new(0.8, -10, 0, 5)
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextScaled = true
+closeBtn.Text = "CLOSE(need new execute after closing)"
+closeBtn.MouseButton1Click:Connect(function()
+  frame:Destroy()
+end)
+
+
+btn3.MouseButton1Click:Connect(function()
+local plr = game.Players.LocalPlayer
+local char = plr.Character
+local hrp = char.HumanoidRootPart
+  local c = game:GetService("ReplicatedStorage"):FindFirstChild("Controllers")
+    local pc = require(c.PlotController)
+    local p = pc:GetMyPlot()
+    if p then
+        local tppart = p.PlotModel:WaitForChild("DeliveryHitbox")
+        hrp.CFrame = tppart.CFrame
+    elseif not p then
+        print("whyyy")
+    end
+end)
+local xray = false
+btn2.MouseButton1Click:Connect(function()
+    local plots = workspace:FindFirstChild("Plots")
+	  xray = not xray
+    if xray then
+      btn2.Text = "Xray[ON]"
+       for _, model in pairs(plots:GetChildren()) do
+		if model:IsA("Model") then
+			local decorations = model:FindFirstChild("Decorations")
+			if decorations then
+				for _, obj in pairs(decorations:GetDescendants()) do
+					if obj:IsA("BasePart") then
+						obj.Transparency = 0.4
+					end
+				end
+			end
+		end
+	end
+    else
+    btn2.Text = "Xray[OFF]"
+    for _, model in pairs(plots:GetChildren()) do
+		if model:IsA("Model") then
+			local decorations = model:FindFirstChild("Decorations")
+			if decorations then
+				for _, obj in pairs(decorations:GetDescendants()) do
+					if obj:IsA("BasePart") then
+						obj.Transparency = 0
+					end
+				end
+			end
+		end
+	end
+  end
+end)
